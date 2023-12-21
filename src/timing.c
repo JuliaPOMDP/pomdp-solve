@@ -54,45 +54,50 @@
 #include <stdlib.h>
 #include <math.h>
 
-/* This has: 'CLK_TCK'  */
-#include <time.h>
-#include <unistd.h>
-
-/* This has: 'struct tms', times() */
-#include <sys/times.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    /* This has: 'CLK_TCK'  */
+    #include <unistd.h>
+    /* This has: 'struct tms', times() */
+    #include <sys/times.h>
+#endif
 
 #include "timing.h"
 
 /**********************************************************************/
-void 
-getSecsDetail( double *user_time, double *system_time ) 
-{
+void getSecsDetail( double *user_time, double *system_time ) {
+
+#ifdef _WIN32
+  FILETIME creationTime, exitTime, kernelTime, userTime;
+  if (GetProcessTimes(GetCurrentProcess(), &creationTime, &exitTime, &kernelTime, &userTime) != -1)
+  {
+    ULARGE_INTEGER li;
+    li.LowPart = userTime.dwLowDateTime;
+    li.HighPart = userTime.dwHighDateTime;
+    *user_time = li.QuadPart / 10000000.0;
+    li.LowPart = kernelTime.dwLowDateTime;
+    li.HighPart = kernelTime.dwHighDateTime;
+    *system_time = li.QuadPart / 10000000.0;
+  }
+#else
   /* Get total CPU time in seconds breaking it down by user
      and system time. */
   struct tms time;
-
-  times( &time );
-  
-  *user_time = (double) time.tms_utime / (double) sysconf(_SC_CLK_TCK);
-  *system_time = (double) time.tms_stime / (double) sysconf(_SC_CLK_TCK);
-
-}  /* getSecsDetail */
+  times(&time);
+  *user_time = (double)time.tms_utime / (double)sysconf(_SC_CLK_TCK);
+  *system_time = (double)time.tms_stime / (double)sysconf(_SC_CLK_TCK);
+#endif
+} /* getSecsDetail */
 /**********************************************************************/
-double 
-getSecs( ) 
-{
+double getSecs( ) {
   /* Get total CPU time in seconds including user and system time. */
   double user_time, system_time;
-
   getSecsDetail( &user_time, &system_time );
-
   return ( user_time + system_time );
-
 }  /* getSecs */
 /**********************************************************************/
-void 
-reportTimes( FILE *file, double tot_secs, char *str ) 
-{
+void reportTimes( FILE *file, double tot_secs, char *str ) {
   /* 
      Report the total secons time in a nicer hr, min sec format with a
      string to label what the time is for. 
