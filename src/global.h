@@ -313,9 +313,10 @@ extern void initGlobal(  );
   anything that the initGlobal() routine did.  */
 extern void cleanUpGlobal(  );
   
-/* Just a wrapper to the UN*X getpid() function to isolate it in case
-   this gets ported to another platform.  Note that for POSIX, the
-   'pid_t' type returned by getpid() is an 'int'.  */
+/* A cross-platform wrapper function to retrieve the process ID.
+   On Unix-like systems, it wraps the getpid() function.
+   On Windows, it uses GetCurrentProcessId().
+   Note: On both platforms, the function returns an 'int'. */
 extern int getPid(  );
 
 /* Just a wrapper to the UN*X unlink() function to isolate it in case

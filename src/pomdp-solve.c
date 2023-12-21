@@ -123,8 +123,7 @@ initPomdpSolve( PomdpSolveParams param )
       file, so that if the program terminates abnormally, we can
       recover the latest solution. We will use the PID of the file to
       make sure the filename is unique so multiple copies can run at
-      the same time. Note that for POSIX, the 'pid_t' type returned by
-      getpid() is an 'int'. */
+      the same time. getPID() returns an int. */
    sprintf( param->backup_file, SAVE_FILE_NAME_FORMAT, getPid() );
 
    /* For saving penultimate alpha file (if selected). */

@@ -49,11 +49,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <unistd.h>
 #include <ctype.h>
 
-#include "mdp/mdp.h"
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
+#include "mdp/mdp.h"
 #include "global.h"
 
 /* Nice to have pretty names for the boolean values 0 and 1. */
@@ -114,15 +118,17 @@ cleanUpGlobal(  )
 
 }  /* cleanUpGlobal */
 /**********************************************************************/
-int 
-getPid(  ) 
-{
+int getPid(  ) {
   /* 
-     Just a wrapper to the UN*X getpid() function to isolate it in case
-     this gets ported to another platform.  Note that for POSIX, the
-     'pid_t' type returned by getpid() is an 'int'.
+     Cross-platform function to retreive the process ID.
+     For POSIX, the `pid_t' type returned by getpid() is an `int'.
+     Windows uses GetCurrentProcessId() which returns a DWORD.
   */
+#ifdef _WIN32
+  return( (int) GetCurrentProcessId() );
+#else
   return( (int) getpid() );
+#endif
 }  /* getPid */
 /**********************************************************************/
 void 

@@ -48,12 +48,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-/* This has: gettimeofday() */
-#include <sys/time.h>
-
-/* This has: getpid(), getppid() */
-#include <unistd.h>
+#include <time.h>
 
 #include "global.h"
 #include "random.h"
@@ -70,50 +65,40 @@ int seeded = 0;
 /* static int seeded = 0; */
 
 /**********************************************************************/
-static int 
-create(maxnum)
-{
-  return nrand48(random_seed48)%Max(1,maxnum);
+static int create(int maxnum) {
+  return rand() % Max(1, maxnum);
 }  /* create */
 /**********************************************************************/
-static void 
-init_randomizer()
-{
+static void init_randomizer() {
+  unsigned long seed;
+  // Combine current time and process ID for the seed
+  seed = (unsigned long)time(NULL) ^ (unsigned long)getPid();
+  srand(seed);
 
   int i;
-  struct timeval *tp = &barf_o_ghetti;
-  struct timezone *tzp = 0;
-
-  gettimeofday(tp, tzp);
-  random_seed48[0] = (tp->tv_usec) & 0177777;
-  random_seed48[1] = getpid();
-  random_seed48[2] = getppid();
   for (i=0;i<87;++i)            /* exercise out any startup transients */
     create(10);
 
   seeded = 1;
 }  /* init_randomizer */
 /**********************************************************************/
-void 
-randomize()
-{
+void randomize() {
 /*
   Seeds the psuedo-random number generated if it has not already been
   seeded. 
 */
-  if( !seeded )
+  if( !seeded ) 
     init_randomizer();
 }  /* randomize */
 /**********************************************************************/
-double 
-fran() 
-{ 
+double fran() { 
   /* Returns a uniform psuedo-random number between 0 and 1 */
 
-  if( !seeded )
+  if( !seeded ) {
     init_randomizer();
+  }
 
-  return erand48(random_seed48);
+  return (double)rand() / (double)RAND_MAX;
 }  /* fran */
 /**********************************************************************/
 void 
