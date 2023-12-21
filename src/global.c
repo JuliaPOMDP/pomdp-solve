@@ -138,7 +138,7 @@ removeFile( char *filename )
 }  /* removeFile */
 /**********************************************************************/
 void 
-strupr ( char *string )
+my_strupr ( char *string )
 {
   /* 
 	Converts a string to upper case
