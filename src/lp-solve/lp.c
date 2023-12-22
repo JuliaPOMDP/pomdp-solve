@@ -58,7 +58,7 @@ typedef int YYSTYPE;
 # define YYLEX yylex(YYLEX_PARAM)
 #else
 # define YYLEX_DECL() yylex(void)
-# define YYLEX yylex()
+# define YYLEX yylex(void)
 #endif
 
 /* Parameters sent to yyerror. */
