@@ -66,5 +66,6 @@
 extern void *XA_malloc (size_t num);
 extern void *XA_realloc (void *p, size_t num);
 extern void *XA_calloc (size_t num, size_t size);
-
+extern void *rpl_malloc (size_t size);
+extern void *rpl_realloc (void *p, size_t size);
 #endif

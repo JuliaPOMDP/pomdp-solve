@@ -102,3 +102,16 @@ XA_calloc (size_t num, size_t size)
   return new;
 }
 /**********************************************************************/
+void *rpl_malloc(size_t size) {
+    if (size == 0) {
+        size = 1;
+    }
+    return malloc(size);
+}
+
+void *rpl_realloc(void *ptr, size_t size) {
+    if (size == 0) {
+        size = 1;
+    }
+    return realloc(ptr, size);
+}
