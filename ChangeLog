@@ -1,5 +1,14 @@
 2023-12-22  Dylan asmar <asmar@stanford.edu>
-	* TODO
+	* src/global.c: Changed strupr to my_strupr for Windows compatibility
+	* src/globah.c: Modified getPid to work on POSIX and Windows
+	* src/random.c: Modified random number generator to work on non POSIX systems (windows)
+	* src/signal-handler.c: Modified signal handler to work on non POSIX systems (windows)
+	* src/timing.c: Modified timing functions to work on non POSIX systems (windows)
+	* src/lp-solve/read.h: Added declaration for yyerror, yylex, and yyparse as implicit declaration was causing errors with more modern compilers
+	* src/xalloc.c and src/xalloc.h: Added declaration for rpl_malloc and rpl_realloc. These were not defined and causing compile errors with MacOS using a GNU compiler.
+	* src/mdp/mdp.c: Removed declaration of IP and IR as they are declared in parser.c and have an extern declaration in mdp.h.
+	* ChangeLog: Added entries for the changes made here. Most changes are for cross-platform compatibility.
+	
 
 2015-05-18  Tony Cassandra <arc@cassandra.org>
 
