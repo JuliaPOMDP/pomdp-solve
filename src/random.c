@@ -123,25 +123,26 @@ setRandomSeed( unsigned short seed[SEED_SIZE] )
   for( i = 0; i < SEED_SIZE; i++ )
     random_seed48[i] = seed[i];
 
+  /* Assume SEED_SIZE = 3 */
+  unsigned int seed_temp = seed[0] ^ seed[1] ^ seed[2];
+  srand(seed_temp);
+  
   seeded = 1;
 }  /* getRandomSeed */
 /**********************************************************************/
-void 
-setRandomSeedFromString ( char *str ) 
+void setRandomSeedFromString(char *str) 
 {
-  int s[SEED_SIZE];
+  unsigned short s[SEED_SIZE];
+  int temp[SEED_SIZE];
   int i;
 
-  /* zzz Need to add something to check for too many and too few
-     values. Also need to make this a function of SEED_SIZE and not
-     hard coded as '3'. */  
-  
-  sscanf( str, "%d:%d:%d", &s[0], &s[1], &s[2] );	
-  
-  for( i = 0; i < SEED_SIZE; i++ )
-    random_seed48[i] = (short) s[i];
+  sscanf(str, "%d:%d:%d", &temp[0], &temp[1], &temp[2]);	
 
-}  /* setRandomSeedFromString  */
+  for(i = 0; i < SEED_SIZE; i++)
+    s[i] = (unsigned short)temp[i];
+
+  setRandomSeed(s);
+} /* setRandomSeedFromString  */
 /**********************************************************************/
 void 
 displayRandomSeed( FILE *file ) 
