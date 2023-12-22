@@ -34,7 +34,7 @@
 #include "lpglob.h"
 #include <string.h>
 #include <limits.h>
-#include <read.h>
+#include "read.h"
 
 short            *relat;
 int              Verbose;
