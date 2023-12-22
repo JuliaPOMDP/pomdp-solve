@@ -74,9 +74,7 @@ int gNumObservations = 0;   /* remains zero for MDPs */
 
 /* Intermediate variables */
 
-I_Matrix *IP;  /* Transition Probabilities */
-
-I_Matrix *IR;  /* Observation Probabilities (POMDP only) */
+/* IP and IR are defined in parser.c */
 
 I_Matrix IQ;  /* Immediate action-state pair values (both MDP and POMDP) */
 
