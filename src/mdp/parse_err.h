@@ -146,11 +146,9 @@ typedef struct enode
 } Err_node;
 
 extern int ERR_dump();
-// extern void ERR_enter();
+extern void ERR_enter();
+// extern void ERR_enter(const char *source, int lineNumber, int errorType, const char *modString);
 extern void ERR_initialize();
 extern void ERR_cleanUp();
 
 #endif
-/*************************************************************************/
-
-extern void ERR_enter(const char *source, int lineNumber, int errorType, const char *modString);
