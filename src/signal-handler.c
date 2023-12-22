@@ -108,7 +108,7 @@ Can remove these????
    current epoch is copleted. This give a more graceful shut-down,
    since the behavior mimics what it would have done if a finite
    horizon for the current horizon was selected. */
-int gInterrupt = FALSE;
+volatile int gInterrupt = FALSE;
 
 /* We will want to do some reporting of information when certina
    interrupts occur.  Thus, we need to maintain a pointer to the
@@ -212,6 +212,7 @@ signalHandlerSIGVTALRM( int sig )
           "SIGVTALRM received, but no parameter context was set." );
 
   reportSIGVTALRM( gInterruptParamContext );
+  gInterrupt = TRUE;
    
 }  /* signalHandlerSIGVTALRM */
 /**********************************************************************/
