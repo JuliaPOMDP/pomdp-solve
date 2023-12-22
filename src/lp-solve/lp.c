@@ -58,7 +58,7 @@ typedef int YYSTYPE;
 # define YYLEX yylex(YYLEX_PARAM)
 #else
 # define YYLEX_DECL() yylex(void)
-# define YYLEX yylex(void)
+# define YYLEX yylex()
 #endif
 
 /* Parameters sent to yyerror. */
@@ -305,9 +305,7 @@ static void yyfreestack(YYSTACKDATA *data)
 #define YYACCEPT goto yyaccept
 #define YYERROR  goto yyerrlab
 
-int
-YYPARSE_DECL()
-{
+int YYPARSE_DECL() {
     int yym, yyn, yystate;
 #if YYDEBUG
     const char *yys;

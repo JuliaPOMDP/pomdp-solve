@@ -34,8 +34,7 @@
 #include "lpglob.h"
 #include <string.h>
 #include <limits.h>
-
-int yyparse(void); // Declaration of yyparse
+#include <read.h>
 
 short            *relat;
 int              Verbose;
