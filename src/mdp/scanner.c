@@ -516,8 +516,6 @@ char *yytext;
 #define NORMAL                   0
 
 extern long currentLineNumber;
-extern void ERR_enter();   /* assumes calling program
-                              will initialize error list */
 
 /* These must appear in consecutive order just like they are defined in 
    the reserved_token array below.
