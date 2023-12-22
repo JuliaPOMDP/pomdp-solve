@@ -556,7 +556,7 @@ void add_constraint(lprec *lp, REAL *row, short constr_type, REAL rh)
   lp->orig_lowbo[lp->rows] = 0;
 
   if(constr_type == GE && rh != 0)
-    lp->orig_rh[lp->rows] =- rh;
+    lp->orig_rh[lp->rows] = -rh;
   else
     lp->orig_rh[lp->rows] = rh;  
 
@@ -884,14 +884,14 @@ void set_rh_vec(lprec *lp, REAL *rh)
   if(lp->scaling_used) {
     for(i = 1; i <= lp->rows; i++)
       if(lp->ch_sign[i])
-        lp->orig_rh[i]=-rh[i]*lp->scale[i];
+        lp->orig_rh[i] = -rh[i]*lp->scale[i];
       else
         lp->orig_rh[i]=rh[i]*lp->scale[i];
   }
   else
     for(i=1; i <= lp->rows; i++)
       if(lp->ch_sign[i])
-        lp->orig_rh[i]=-rh[i];
+        lp->orig_rh[i] = -rh[i];
       else
         lp->orig_rh[i]=rh[i];
   lp->eta_valid=FALSE;
@@ -961,11 +961,11 @@ void set_constr_type(lprec *lp, int row, short con_type)
         {
           for(i = 0; i < lp->non_zeros; i++)
             if(lp->mat[i].row_nr==row)
-              lp->mat[i].value*=-1;
+              lp->mat[i].value *= -1;
           lp->eta_valid=FALSE;
           lp->ch_sign[row]=FALSE;
-          if(lp->orig_rh[row]!=0)
-            lp->orig_rh[row]*=-1;
+          if(lp->orig_rh[row] != 0)
+            lp->orig_rh[row] *= -1;
         }
     }
   else if(con_type==LE)
@@ -976,11 +976,11 @@ void set_constr_type(lprec *lp, int row, short con_type)
         {
           for(i = 0; i < lp->non_zeros; i++)
             if(lp->mat[i].row_nr==row)
-              lp->mat[i].value*=-1;
+              lp->mat[i].value *= -1;
           lp->eta_valid=FALSE;
           lp->ch_sign[row]=FALSE;
           if(lp->orig_rh[row]!=0)
-            lp->orig_rh[row]*=-1;
+            lp->orig_rh[row] *= -1;
         }
     }
   else if(con_type==GE)
@@ -991,11 +991,11 @@ void set_constr_type(lprec *lp, int row, short con_type)
         {
           for(i = 0; i < lp->non_zeros; i++)
             if(lp->mat[i].row_nr==row)
-              lp->mat[i].value*=-1;
+              lp->mat[i].value *= -1;
           lp->eta_valid=FALSE;
           lp->ch_sign[row]=TRUE;
-          if(lp->orig_rh[row]!=0)
-            lp->orig_rh[row]*=-1;
+          if(lp->orig_rh[row] != 0)
+            lp->orig_rh[row] *= -1;
         }
     } 
   else

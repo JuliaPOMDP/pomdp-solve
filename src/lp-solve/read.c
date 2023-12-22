@@ -35,6 +35,8 @@
 #include <string.h>
 #include <limits.h>
 
+int yyparse(void); // Declaration of yyparse
+
 short            *relat;
 int              Verbose;
 constraint_name  *First_constraint_name;
