@@ -106,12 +106,24 @@ void *rpl_malloc(size_t size) {
     if (size == 0) {
         size = 1;
     }
-    return malloc(size);
+    return calloc(1, size);
 }
 
 void *rpl_realloc(void *ptr, size_t size) {
     if (size == 0) {
-        size = 1;
+        free(ptr);
+        return NULL;
+    } else if (!ptr) {
+        return calloc(1, size);
+    } else {
+        void *new_ptr = calloc(1, size);
+        if (new_ptr) {
+            // WARNING: This code assumes that size is greater than or equal to
+            // the size of the old block. If it's not, this could cause a crash
+            // or other undefined behavior.
+            memcpy(new_ptr, ptr, size);
+            free(ptr);
+        }
+        return new_ptr;
     }
-    return realloc(ptr, size);
 }
