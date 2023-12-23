@@ -93,8 +93,6 @@ list might change).
 
 }  /* ERR_initialize */
 /**********************  ERR_enter  ***********************************/
-void 
-ERR_enter(source, lineno, errorid, modificationString)
 /*
 	The routine will create a new node for the linked list of errors and fill
 it with the proper data.  It will then insert this node into the existing linked
@@ -124,14 +122,9 @@ number and, similiarly, on a first generated-first displayed basis.
 		message is printed out. (if ERR_META is in error message)
 
 */
-	char 	*source;
-	int	lineno,errorid;
-	char	*modificationString;
-{
+void ERR_enter(char *source, int lineno, int errorid, char *modificationString) {
 	Err_node	*newNode;	/* node for new error */
-
-	Err_node	*tempPtr,      /* for insertion in sorted list */
-			*trailPtr;
+	Err_node	*tempPtr, *trailPtr; /* for insertion in sorted list */
 
 	/* Is the error number valid? */
 	if (errorid >= NBR_ERRORS)

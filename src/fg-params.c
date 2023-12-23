@@ -148,8 +148,7 @@ FGP_doPostParseActions( FiniteGridParams params ) {
   opts = params->opts;
 
   /* Must have a POMDP filename or else things ill not work. */
-  if (( opts->pomdp_filename == NULL )
-	 || ( opts->pomdp_filename[0] == '\0' ))
+  if ( opts->pomdp_filename[0] == '\0' )
     {
 	 fprintf( stderr, "No POMDP file specified. Use '-h' for help.\n" );
 	 exit( 1 );
