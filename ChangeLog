@@ -1,13 +1,21 @@
-2023-12-22  Dylan asmar <asmar@stanford.edu>
-	* src/global.c: Changed strupr to my_strupr for Windows compatibility
-	* src/globah.c: Modified getPid to work on POSIX and Windows
-	* src/random.c: Modified random number generator to work on non POSIX systems (windows)
-	* src/signal-handler.c: Modified signal handler to work on non POSIX systems (windows)
-	* src/timing.c: Modified timing functions to work on non POSIX systems (windows)
-	* src/lp-solve/read.h: Added declaration for yyerror, yylex, and yyparse as implicit declaration was causing errors with more modern compilers
-	* src/xalloc.c and src/xalloc.h: Added declaration for rpl_malloc and rpl_realloc. These were not defined and causing compile errors with MacOS using a GNU compiler.
-	* src/mdp/mdp.c: Removed declaration of IP and IR as they are declared in parser.c and have an extern declaration in mdp.h.
-	* ChangeLog: Added entries for the changes made here. Most changes are for cross-platform compatibility.
+2023-12-23  Dylan asmar <asmar@stanford.edu>
+     * configure.ac: Numerous changes to address compiler warnings
+	 * src/global.c: Changed strupr to my_strupr for Windows compatibility
+     * src/globah.c: Modified getPid to work on POSIX and Windows
+     * src/random.c: Modified random number generator to work on non POSIX systems (windows)
+     * src/signal-handler.c: Modified signal handler to work on non POSIX systems (windows) and fixed a bug where gInterrupt was not being set after timeout
+	 * src/signal-handler.h: Adjusted gInterrupt to be volatile
+     * src/timing.c: Modified timing functions to work on non POSIX systems (windows)
+     * src/xalloc.c and src/xalloc.h: Added declaration and defined rpl_malloc and rpl_realloc. These were not defined and caused errors for systems that could not use malloc.
+     * src/mdp/mdp.c: Removed declaration of IP and IR as they are declared in parser.c and have an extern declaration in mdp.h
+	 * src/Makefile.am: Compiler warning fixes. INCLUDES -> AM_CPPFLAGS, CFLAGS -> AM_CFLAGS, LDFLAGS -> AM_LDFLAGS
+	 * src/lp-solve/read.h: Added declaration for yyerror, yylex, and yyparse as implicit declaration was causing errors with more modern compilers
+	 * src/fg-params.c: Fixed a compiler warning where an or statement wasn't necessary
+	 * src/laspack/Makefile.am: Compiler warning fixes. INCLUDES -> AM_CPPFLAGS, CFLAGS -> AM_CFLAGS, YFLAGS -> AM_YFLAGS
+	 * src/mdp/Makefile.am: Compiler warning fixes. CFLAGS -> AM_CFLAGS, YFLAGS -> AM_YFLAGS
+	 * src/mdp/parse_err.c and parsr_err.h: Implicit declaration of ERR_enter was addressed
+	 * src/testing/Makefile.am: Compiler warning fixes. INCLUDES -> AM_CPPFLAGS, CFLAGS -> AM_CFLAGS, LDFLAGS -> AM_LDFLAGS
+     * ChangeLog: Added entries for the changes made here. Most changes are for cross-platform compatibility
 	
 
 2015-05-18  Tony Cassandra <arc@cassandra.org>
